@@ -22,4 +22,5 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/user')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('user.register');
     Route::post('/login', [AuthController::class, 'login'])->name('user.login');
+    Route::post('/me',[AuthController::class, 'me'])->name('user,me');
 });
