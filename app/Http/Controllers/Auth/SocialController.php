@@ -57,10 +57,6 @@ class SocialController extends Controller
 
         if ($user = User::where('email', $socialUser->getEmail())->first()) {
             Auth::login($user, true);
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
             $status = \Symfony\Component\HttpFoundation\Response::HTTP_OK;
             return view('login.result', [
                 'status' => $status,
@@ -74,11 +70,7 @@ class SocialController extends Controller
      */
     protected function register(
         SocialUser $socialUser,
-<<<<<<< Updated upstream
         string $provider
-=======
-        string $provider,
->>>>>>> Stashed changes
     ) {
 
         // socialUser 객체를 등록하고, Registered 이벤트를 발생시킵니다.
