@@ -70,11 +70,7 @@ class SocialController extends Controller
      */
     protected function register(
         SocialUser $socialUser,
-<<<<<<< Updated upstream
-        string $provider
-=======
         string $provider,
->>>>>>> Stashed changes
     ) {
 
         // socialUser 객체를 등록하고, Registered 이벤트를 발생시킵니다.
