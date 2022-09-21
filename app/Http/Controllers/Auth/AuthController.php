@@ -75,12 +75,13 @@ class AuthController extends Controller
         return response()->json(
             [
                 'message' => '토큰 생성 성공',
+                'user' => Auth::user(),
                 'token' => $tokenResponse,
             ],
             \Symfony\Component\HttpFoundation\Response::HTTP_OK
         );
-
     }
+
     /**
      * 리프레시 토근을 받아서 엑세스 토근 새로 고침
      */
@@ -158,6 +159,7 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
 
         return response()->json(
             [
