@@ -34,14 +34,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-<<<<<<< Updated upstream
     protected $hidden = ['password', 'remember_token'];
-=======
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
->>>>>>> Stashed changes
 
     /**
      * The attributes that should be cast.
