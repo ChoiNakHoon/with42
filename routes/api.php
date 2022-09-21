@@ -22,5 +22,10 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/user')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('user.register');
     Route::post('/login', [AuthController::class, 'login'])->name('user.login');
-    Route::post('/me',[AuthController::class, 'me'])->name('user,me');
+    Route::post('/token', [AuthController::class, 'createToken'])->name('user.token');
+    Route::put('/token',[AuthController::class, 'tokenRefresh'])->name('user.tokenRefresh');
+
+    Route::middleware('auth:api')->group(function() {
+        Route::post('/me',[AuthController::class, 'me'])->name('user,me');
+    });
 });

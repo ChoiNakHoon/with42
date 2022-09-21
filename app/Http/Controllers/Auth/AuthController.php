@@ -30,6 +30,28 @@ class AuthController extends Controller
 
         $data = request()->only('email', 'password');
 
+        return response()->json(
+            [
+                'user' => Auth::user(),
+            ],
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK
+        );
+    }
+
+    public function createToken(){
+
+        $user = Auth::user();
+
+        //유저 데이터가 없다면
+        if ($user == null) {
+            return response()->json(
+                [
+                    'error' => 'User not found'
+                ],
+                \Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND
+            );
+        }
+
         // passport client 가져오기
         $client = Client::where('password_client', 1)->first();
 
@@ -42,8 +64,8 @@ class AuthController extends Controller
                 'grant_type' => 'password',
                 'client_id' => $client->id,
                 'client_secret' => $client->secret,
-                'username' => $data['email'],
-                'password' => $data['password'],
+                'username' => $user->email,
+                'password' => $user->password,
                 'scope' => '',
             ],
         ]);
@@ -52,13 +74,13 @@ class AuthController extends Controller
 
         return response()->json(
             [
-                'user' => Auth::user(),
+                'message' => '토큰 생성 성공',
                 'token' => $tokenResponse,
             ],
             \Symfony\Component\HttpFoundation\Response::HTTP_OK
         );
-    }
 
+    }
     /**
      * 리프레시 토근을 받아서 엑세스 토근 새로 고침
      */
@@ -137,29 +159,9 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        // passport client 가져오기
-        $client = Client::where('password_client', 1)->first();
-
-        $http = new \GuzzleHttp\Client();
-
-        $getTokenGenerateRoute = route('passport.token');
-
-        $response = $http->post($getTokenGenerateRoute, [
-            'form_params' => [
-                'grant_type' => 'password',
-                'client_id' => $client->id,
-                'client_secret' => $client->secret,
-                'username' => $data['email'],
-                'password' => $data['password'],
-                'scope' => '',
-            ],
-        ]);
-
-        $tokenResponsed = json_decode((string) $response->getBody(), true);
         return response()->json(
             [
                 'user' => $user,
-                'token' => $tokenResponsed,
             ],
             \Symfony\Component\HttpFoundation\Response::HTTP_CREATED
         );
