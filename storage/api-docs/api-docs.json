@@ -1,0 +1,117 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Toonvill API",
+        "description": "L5 Swagger OpenApi description",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "description": "Home page",
+                "responses": {
+                    "default": {
+                        "description": "Welcome page"
+                    }
+                }
+            }
+        },
+        "/user/me/": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Show a Product from his Id",
+                "description": "Show a Product from his Id",
+                "operationId": "showProduct",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "email_verified_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Users": {
+                "title": "Users",
+                "properties": {
+                    "data": {
+                        "title": "data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "parameters": {
+            "User--id": {
+                "name": "User_id",
+                "in": "path",
+                "description": "Id of User",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "example": "1"
+                }
+            }
+        }
+    }
+}

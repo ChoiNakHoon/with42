@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use \App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,13 +20,14 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
+Route::prefix('/auth')->group(function () {
+    Route::get('/token',[AuthController::class,'createToken'])->name('user.createToken');
+});
+
 Route::prefix('/user')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('user.register');
     Route::post('/login', [AuthController::class, 'login'])->name('user.login');
-    Route::post('/token', [AuthController::class, 'createToken'])->name('user.token');
-    Route::put('/token',[AuthController::class, 'tokenRefresh'])->name('user.tokenRefresh');
-
     Route::middleware('auth:api')->group(function() {
-        Route::post('/me',[AuthController::class, 'me'])->name('user,me');
+        Route::post('/me',[UserController::class, 'me'])->name('user.me');
     });
 });

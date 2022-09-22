@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Str;
 use Laravel\Passport\Client;
-use Illuminate\Http\{RedirectResponse, Request};
+use Illuminate\Http\{RedirectResponse, Request, Response};
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SocialUser;
 
@@ -20,7 +20,7 @@ class SocialController extends Controller
     public function execute(Request $request, string $provider)
     {
         if (!array_key_exists($provider, config('services'))) {
-            $status = \Symfony\Component\HttpFoundation\Response::HTTP_UNAUTHORIZED;
+            $status = Response::HTTP_UNAUTHORIZED;
             return view('login.result', [
                 'status' => $status,
             ]);
@@ -57,7 +57,7 @@ class SocialController extends Controller
 
         if ($user = User::where('email', $socialUser->getEmail())->first()) {
             Auth::login($user, true);
-            $status = \Symfony\Component\HttpFoundation\Response::HTTP_OK;
+            $status = Response::HTTP_OK;
             return view('login.result', [
                 'status' => $status,
             ]);
@@ -105,7 +105,7 @@ class SocialController extends Controller
         $user->save();
 
         Auth::login($user, true);
-        $status = Symfony\Component\HttpFoundation\Response::HTTP_CREATED;
+        $status = Response::HTTP_CREATED;
         return view('login.result', [
             'status' => $status,
         ]);
