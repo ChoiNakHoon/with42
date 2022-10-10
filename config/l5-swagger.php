@@ -5,7 +5,7 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'L5 Swagger UI',
+                'title' => 'ToonVill Swagger API',
             ],
 
             'routes' => [
@@ -69,7 +69,7 @@ return [
                     \App\Http\Middleware\VerifyCsrfToken::class,
                     \Illuminate\Routing\Middleware\SubstituteBindings::class,
                     \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
-                    'auth',
+//                    'auth',
                 ],
                 'asset' => [],
                 'docs' => [],

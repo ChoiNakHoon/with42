@@ -11,6 +11,57 @@ use Laravel\Passport\Client;
 
 class AuthController extends Controller
 {
+
+    /**
+     * @OA\Post(
+     *   path="/user/register",
+     *   summary="회원가입",
+     *   description="회원가입",
+     *   tags={"Users"},
+     *  @OA\RequestBody(
+     *    required=true,
+     *    @OA\MediaType(
+     *      mediaType="application/json",
+     *      @OA\Schema(
+     *          @OA\Property(
+     *              property="email",
+     *              type="string",
+     *              ),
+     *          @OA\Property(
+     *              property="password",
+     *              type="string",
+     *              )
+     *      )
+     *    )
+     *  ),
+     *   @OA\Response(
+     *     response=201,
+     *     description="Succeeded",
+     *       @OA\JsonContent(
+     *       @OA\Property(
+     *       title="user",
+     *       property="user",
+     *       type="object",
+     *       ref="#/components/schemas/User"
+     *       ),
+     *     ),
+     *   ),
+     *   @OA\Response(
+     *     response="404",
+     *     description="User not found",
+     *      @OA\JsonContent(
+     *      @OA\Property(
+     *          property="message",
+     *          type="error message",
+     *      ),
+     *    ),
+     * ),
+     * )
+     *
+     * @param User $User
+     * @return JsonResponse
+     **/
+
     // 로그인
     // 회원가입
     public function register(Request $request)
@@ -47,7 +98,56 @@ class AuthController extends Controller
         );
     }
 
-
+    /**
+     * @OA\Post(
+     *   path="/user/login",
+     *   summary="로그인",
+     *   description="로그인",
+     *   tags={"Users"},
+     *  @OA\RequestBody(
+     *    required=true,
+     *    @OA\MediaType(
+     *      mediaType="application/json",
+     *      @OA\Schema(
+     *          @OA\Property(
+     *              property="email",
+     *              type="string",
+     *              ),
+     *          @OA\Property(
+     *              property="password",
+     *              type="string",
+     *              )
+     *      )
+     *    )
+     *  ),
+     *   @OA\Response(
+     *     response=201,
+     *     description="Succeeded",
+     *       @OA\JsonContent(
+     *       @OA\Property(
+     *       title="user",
+     *       property="user",
+     *       type="object",
+     *       ref="#/components/schemas/User"
+     *       ),
+     *     ),
+     *   ),
+     *   @OA\Response(
+     *     response="404",
+     *     description="User not found",
+     *      @OA\JsonContent(
+     *      @OA\Property(
+     *          property="message",
+     *          type="string",
+     *          example="유효하지 않은 로그인 정보입니다.",
+     *      ),
+     *    ),
+     * ),
+     * )
+     *
+     * @param User $User
+     * @return JsonResponse
+     **/
 
     public function login(Request $request)
     {
@@ -75,7 +175,53 @@ class AuthController extends Controller
         );
     }
 
-
+    /**
+     * @OA\Get (
+     *   path="/auth/token",
+     *   summary="토큰 요청",
+     *   description="로그인 이후 토큰 요청",
+     *   tags={"Auth"},
+     *      @OA\Response(
+     *          response=200,
+     *          description="응답성공",
+     *      @OA\JsonContent(
+     *          @OA\Property(
+     *              property="message",
+     *              type="string",
+     *              example="토큰 생성 성공",
+     *          ),
+     *          @OA\Property(
+     *              title="user",
+     *              property="user",
+     *              type="object",
+     *              ref="#/components/schemas/User"
+     *           ),
+     *          @OA\Property(
+     *              property="token",
+     *              type="string",
+     *              example="6d8a83ac57a3c392e1094335ff9eb2ad",
+     *           ),
+     *          @OA\Property(
+     *              property="expires_at",
+     *              type="string",
+     *              example="2022-09-21 23:55:52",
+     *           ),
+     *      ),
+     *      ),
+     *      @OA\Response(
+     *          response="404",
+     *          description="User not found",
+     *      @OA\JsonContent(
+     *          @OA\Property(
+     *              property="message",
+     *              type="string",
+     *              example="User not found",
+     *          ),
+     *      ),
+     *    ),
+     * )
+     *
+     **/
 
     public function createToken()
     {

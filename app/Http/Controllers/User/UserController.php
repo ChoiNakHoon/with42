@@ -13,10 +13,10 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
-     *   path="/user/me/",
-     *   summary="Show a Product from his Id",
-     *   description="Show a Product from his Id",
-     *   operationId="showProduct",
+     *   path="/user/me",
+     *   summary="유저 정보가져오기",
+     *   description="유저 정보를 가져옵니다.",
+     *   operationId="token",
      *   tags={"Users"},
      *   @OA\Response(
      *     response=200,
@@ -30,12 +30,14 @@ class UserController extends Controller
      *       ),
      *     ),
      *   ),
-     *   @OA\Response(response="404",description="Product not found"),
+     *   @OA\Response(response="404",description="User not found"),
+     *   security={{ "apiAuth": {} }}
      * )
      *
-     * @param Product $Product
+     * @param User $User
      * @return JsonResponse
-     */
+     **/
+
     public function me()
     {
         if (Auth::user() == null) {
