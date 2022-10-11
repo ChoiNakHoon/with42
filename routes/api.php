@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
-use \App\Http\Controllers\User\UserController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Friend\FriendController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +28,18 @@ Route::prefix('/user')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('user.register');
     Route::post('/login', [AuthController::class, 'login'])->name('user.login');
     Route::middleware('auth:api')->group(function() {
+        Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
         Route::post('/me',[UserController::class, 'me'])->name('user.me');
     });
 });
+
+Route::prefix('/friend')->group(function () {
+    Route::middleware('auth:api')->group(function(){
+        Route::get('/list', [FriendController::class, 'list'])->name('friend.list');
+        Route::post('/accept', [FriendController::class, 'accept'])->name('friend.accept');
+        Route::post('/reject', [FriendController::class, 'reject'])->name('friend.reject');
+        Route::post('/add', [FriendController::class, 'add'])->name('friend.add');
+        Route::post('/del', [FriendController::class, 'del'])->name('friend.del');
+    });
+});
+

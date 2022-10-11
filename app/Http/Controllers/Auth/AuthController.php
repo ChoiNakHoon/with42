@@ -251,4 +251,52 @@ class AuthController extends Controller
             Response::HTTP_OK
         );
     }
+
+
+    /**
+     * @OA\Get (
+     *   path="/user/logout",
+     *   summary="유저 로그아웃",
+     *   description="로그인 이후 로그아웃 요청",
+     *   tags={"Users"},
+     *      @OA\Response(
+     *          response=200,
+     *          description="응답성공",
+     *      ),
+     *      @OA\Response(
+     *          response="404",
+     *          description="User not found",
+     *      @OA\JsonContent(
+     *          @OA\Property(
+     *              property="message",
+     *              type="string",
+     *              example="User not found",
+     *          ),
+     *      ),
+     *    ),
+     * security={{ "apiAuth": {} }}
+     * )
+     *
+     **/
+    public function logout() {
+        $user = Auth::User();
+
+        if ($user == null) {
+            return response()->json(
+                [
+                    'message' => 'User not found'
+                ],
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        Auth::logout();
+
+        return response()->json(
+            [
+                'message' => '로그 아웃',
+            ],
+            Response::HTTP_OK
+        );
+    }
 }
