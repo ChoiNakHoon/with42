@@ -77,6 +77,8 @@ class User extends Authenticatable
         'google_id',
         'profile_url',
         'login_method',
+        'character_info',
+        ''
     ];
 
     /**
@@ -85,7 +87,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = ['password', 'remember_token'];
-
     /**
      * The attributes that should be cast.
      *
@@ -93,5 +94,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'character_info' => 'array'
     ];
 }

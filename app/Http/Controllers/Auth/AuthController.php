@@ -66,7 +66,11 @@ class AuthController extends Controller
     // 회원가입
     public function register(Request $request)
     {
-        $vaild = validator($request->only('email', 'name', 'password'), [
+        $singUpData = $request->segments();
+        info("AuthConroller", ["request" => $request]);
+        info("AuthConroller", ["singUpData" => $singUpData]);
+        info("AuthConroller", ["email" => $request->email, "password" => $request->password ]);
+        $vaild = validator($request->only('email', 'password'), [
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
@@ -86,6 +90,7 @@ class AuthController extends Controller
         $user = User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'login_method' => 'email'
         ]);
 
         Auth::login($user, true);

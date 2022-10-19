@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable()->comment("유저 이름");
             $table->string('nickname')->nullable()->comment("유저 아이디");
-            $table->string('email')->unique()->comment('유저 계정 아이디');
+            $table->string('email')->comment('유저 계정 아이디');
             $table->timestamp('email_verified_at')->nullable()->comment('유저 계정 인증 시간');
             $table->string('profile_url')->nullable()->comment('유저 계정 이미지');
             $table->string('password')->comment('유저 계정 비밀번호');
