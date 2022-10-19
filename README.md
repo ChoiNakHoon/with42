@@ -11,11 +11,12 @@ Requirements
 Installation
 ============
 라라벨 설치
+    
     composer create-project laravel/laravel www "9.*"
-
 라이브러리 설치
-    composer install
 
+    composer install\
 패키지 갱신
+
     composer update
 
