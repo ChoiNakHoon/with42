@@ -30,11 +30,13 @@ Route::prefix('/user')->group(function () {
     Route::middleware('auth:api')->group(function() {
         Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
         Route::post('/me',[UserController::class, 'me'])->name('user.me');
+        Route::post('/avatar', [UserController::class, 'avatar'])->name('user.avatar');
     });
 });
 
 Route::prefix('/friend')->group(function () {
     Route::middleware('auth:api')->group(function(){
+        Route::get('/reject/list', [FriendController::class, 'rejectList'])->name('friend.rejectList');
         Route::get('/list', [FriendController::class, 'list'])->name('friend.list');
         Route::post('/accept', [FriendController::class, 'accept'])->name('friend.accept');
         Route::post('/reject', [FriendController::class, 'reject'])->name('friend.reject');
